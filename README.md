@@ -6,7 +6,7 @@ This a basic Food Delivery Application.
 
 This project is a starting point for a Flutter application.
 
-#It contains 4 working screens as of this first Commit:
+# It contains 4 working screens as of this first Commit:
 - A Login Screen
 - A Home page
 - A Food Page
