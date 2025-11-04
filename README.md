@@ -1,12 +1,16 @@
 # login_app
 
-A new Flutter project.
+This a basic Food Delivery Application.
 
 ## Getting Started
 
 This project is a starting point for a Flutter application.
 
-A few resources to get you started if this is your first Flutter project:
+# It contains 4 working screens as of this first Commit:
+- A Login Screen
+- A Home page
+- A Food Page
+- A Cart Page
 
 - [Lab: Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
 - [Cookbook: Useful Flutter samples](https://docs.flutter.dev/cookbook)
