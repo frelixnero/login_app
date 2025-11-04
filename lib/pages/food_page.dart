@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:iconsax/iconsax.dart';
 import 'package:login_app/NavigationService/navigator_key.dart';
 import 'package:login_app/components/food_page_carousel.dart';
 import 'package:login_app/components/my_grid_view.dart';
@@ -8,6 +7,7 @@ import 'package:login_app/components/reflex_btn.dart';
 import 'package:login_app/components/size_selector.dart';
 import 'package:login_app/models/food.dart';
 import 'package:login_app/models/resturant.dart';
+import 'package:lucide_icons/lucide_icons.dart';
 import 'package:provider/provider.dart';
 
 class FoodPage extends StatefulWidget {
@@ -20,10 +20,11 @@ class FoodPage extends StatefulWidget {
 
 class _FoodPageState extends State<FoodPage> {
   final Map<Addons, bool> selectedAddon = {};
-
   @override
   void initState() {
     super.initState();
+    // Start fetching the data when the widget is created
+
     for (Addons addon in widget.food.availabelAddons) {
       selectedAddon[addon] = false;
     }
@@ -69,7 +70,21 @@ class _FoodPageState extends State<FoodPage> {
     // Resturant myResturant = Provider.of<Resturant>(context, listen: false);
     // final userCart = myResturant.cart;
     return Scaffold(
-      appBar: AppBar(title: const Text("Product Details"), centerTitle: true),
+      appBar: AppBar(
+        leading: IconButton(
+          icon: const Icon(Icons.arrow_back),
+          onPressed: () => Navigator.of(context).pop(),
+        ),
+        title: const Text(
+          "Product Details",
+          style: TextStyle(
+            fontSize: 18,
+            fontWeight: FontWeight.w600,
+            fontFamily: "Sora-SemiBold",
+          ),
+        ),
+        centerTitle: true,
+      ),
       body: Column(
         mainAxisAlignment: MainAxisAlignment.start,
         children: [
@@ -78,12 +93,11 @@ class _FoodPageState extends State<FoodPage> {
               children: [
                 // Food Page Carousel
                 SizedBox(
-                  height: 250,
+                  height: 265,
                   child: Padding(
                     padding: const EdgeInsets.all(10),
                     child: FoodPageCarousel(
-                      imageUrl1:
-                          "https://www.bhg.com/thmb/7dROILyl6Q6ZtiKBbe8B_CgC_II=/2250x0/filters:no_upscale():strip_icc()/Lady-Locks-Recipe-6750995-fece434185e547f985ecb87ef4444e48.jpg",
+                      imageUrl1: widget.food.networkImagePath,
                       imageUrl2:
                           "https://www.spatuladesserts.com/wp-content/uploads/2024/03/Chocolate-Puff-Pastry-00438.jpg",
                       imageUrl3:
@@ -109,18 +123,20 @@ class _FoodPageState extends State<FoodPage> {
                           Text(
                             widget.food.name,
                             style: TextStyle(
-                              fontSize: 20,
+                              fontSize: 18,
                               color: Theme.of(context).colorScheme.onSecondary,
-                              fontWeight: FontWeight.bold,
+                              fontWeight: FontWeight.w600,
+                              fontFamily: "Sora-SemiBold",
                             ),
                           ),
                           SizedBox(height: 5),
                           Text(
-                            '₦${widget.food.price.toStringAsFixed(2)}',
+                            '\$${widget.food.price.toStringAsFixed(2)}',
                             style: TextStyle(
-                              fontSize: 15,
-                              color: Theme.of(context).colorScheme.tertiary,
-                              fontWeight: FontWeight.bold,
+                              fontSize: 18,
+                              color: Theme.of(context).colorScheme.onSecondary,
+                              fontWeight: FontWeight.w600,
+                              fontFamily: "Sora-SemiBold",
                             ),
                           ),
                         ],
@@ -168,9 +184,10 @@ class _FoodPageState extends State<FoodPage> {
                       Text(
                         'Description',
                         style: TextStyle(
-                          fontSize: 18,
-                          color: Theme.of(context).colorScheme.onSurface,
-                          fontWeight: FontWeight.bold,
+                          fontSize: 16,
+                          color: Theme.of(context).colorScheme.onSecondary,
+                          fontWeight: FontWeight.w600,
+                          fontFamily: "Sora-SemiBold",
                         ),
                       ),
                       SizedBox(height: 5),
@@ -182,7 +199,8 @@ class _FoodPageState extends State<FoodPage> {
                           style: TextStyle(
                             fontSize: 15,
                             color: Theme.of(context).colorScheme.tertiary,
-                            fontWeight: FontWeight.bold,
+                            fontWeight: FontWeight.w400,
+                            fontFamily: "Sora-Regular",
                           ),
                         ),
                       ),
@@ -202,9 +220,10 @@ class _FoodPageState extends State<FoodPage> {
                       Text(
                         'Select Size',
                         style: TextStyle(
-                          fontSize: 18,
-                          color: Theme.of(context).colorScheme.onSurface,
-                          fontWeight: FontWeight.bold,
+                          fontSize: 16,
+                          color: Theme.of(context).colorScheme.onSecondary,
+                          fontWeight: FontWeight.w600,
+                          fontFamily: "Sora-SemiBold",
                         ),
                       ),
                       SizedBox(height: 10),
@@ -221,10 +240,12 @@ class _FoodPageState extends State<FoodPage> {
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
                           Text(
-                            'More Like this',
+                            'Similar Pastries',
                             style: TextStyle(
-                              fontSize: 20,
-                              fontWeight: FontWeight.bold,
+                              fontSize: 16,
+                              color: Theme.of(context).colorScheme.onSecondary,
+                              fontWeight: FontWeight.w600,
+                              fontFamily: "Sora-SemiBold",
                             ),
                           ),
                           Spacer(),
@@ -245,7 +266,10 @@ class _FoodPageState extends State<FoodPage> {
                           ),
                         ],
                       ),
-                      MyGridView(allowNavigation: false),
+                      MyGridView(
+                        allowNavigation: true,
+                        excludeFood: widget.food,
+                      ),
                     ],
                   ),
                 ),
@@ -257,7 +281,7 @@ class _FoodPageState extends State<FoodPage> {
             child: ReflexButton(
               onTap: () => addToCart(widget.food, selectedAddon),
               title: "Add to Cart",
-              btnIcon: Iconsax.shopping_cart,
+              btnIcon: LucideIcons.shoppingCart,
             ),
           ),
         ],

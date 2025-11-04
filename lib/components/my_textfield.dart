@@ -5,21 +5,27 @@ class MyTextField extends StatelessWidget {
   final TextEditingController controller;
   final bool obscureText;
   final Widget? preIcon;
+  final void Function()? onTap;
+  final void Function(String)? onChanged;
+
   const MyTextField({
     super.key,
     required this.hintText,
     required this.controller,
     required this.preIcon,
     this.obscureText = false,
+    this.onTap,
+    this.onChanged,
   });
 
   @override
   Widget build(BuildContext context) {
-    // TODO: implement build
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 0),
       child: TextField(
         controller: controller,
+        onTap: onTap,
+        onChanged: onChanged,
 
         obscureText: obscureText,
         cursorColor: Theme.of(context).colorScheme.tertiary,

@@ -62,7 +62,14 @@ class _CartPageState extends State<CartPage> {
         return Scaffold(
           backgroundColor: Theme.of(context).colorScheme.surface,
           appBar: AppBar(
-            title: const Text("Cart Page"),
+            title: const Text(
+              "Cart Page",
+              style: TextStyle(
+                fontSize: 20,
+                fontFamily: "Sora-SemiBold",
+                fontWeight: FontWeight.w500,
+              ),
+            ),
             centerTitle: true,
             actions: [
               //  clear cart button
@@ -120,6 +127,7 @@ class _CartPageState extends State<CartPage> {
                                   Theme.of(context).colorScheme.inversePrimary,
                               fontSize: 30,
                               fontWeight: FontWeight.bold,
+                              fontFamily: "Sora-Bold",
                             ),
                           ),
                         )
@@ -150,12 +158,12 @@ class _CartPageState extends State<CartPage> {
                             ),
                           ),
                           Text(
-                            "₦${resturant.getTotalPrice().toStringAsFixed(2)}",
+                            "\$ ${resturant.getTotalPrice().toStringAsFixed(2)}",
                             style: TextStyle(
                               fontSize: 16,
-                              fontWeight: FontWeight.bold,
-                              color:
-                                  Theme.of(context).colorScheme.inversePrimary,
+                              fontFamily: "Sora-SemiBold",
+                              fontWeight: FontWeight.w500,
+                              color: Theme.of(context).colorScheme.onSecondary,
                             ),
                           ),
                         ],

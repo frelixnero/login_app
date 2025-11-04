@@ -91,9 +91,10 @@ class _RegisterPageState extends State<RegisterPage> {
                   child: Text(
                     "Logo",
                     style: TextStyle(
-                      fontSize: 30,
-                      color: Theme.of(context).colorScheme.primary,
-                      fontWeight: FontWeight.bold,
+                      fontSize: 31,
+                      color: Theme.of(context).colorScheme.surface,
+                      fontFamily: "Urbanist-Bold",
+                      fontWeight: FontWeight.w700,
                     ),
                   ),
                 ),
@@ -127,17 +128,24 @@ class _RegisterPageState extends State<RegisterPage> {
                     const Text(
                       "Hey there,",
                       style: TextStyle(
-                        fontSize: 30,
-                        fontWeight: FontWeight.bold,
+                        fontFamily: "Urbanist-Bold",
+                        fontWeight: FontWeight.w700,
+                        fontSize: 31,
                       ),
                     ),
                     const Text(
                       "Let's setup an account for you",
-                      style: TextStyle(fontSize: 16),
+                      style: TextStyle(
+                        fontSize: 16,
+                        fontWeight: FontWeight.w400,
+                      ),
                     ),
                     const Text(
                       "Fill in the fields to begin your experience",
-                      style: TextStyle(fontSize: 16),
+                      style: TextStyle(
+                        fontSize: 16,
+                        fontWeight: FontWeight.w400,
+                      ),
                     ),
                     const SizedBox(height: 50),
 
@@ -204,8 +212,7 @@ class _RegisterPageState extends State<RegisterPage> {
                     const SizedBox(height: 10),
                     const SizedBox(height: 30),
 
-                    MyButton(
-                      buttonText: "Sign Up",
+                    MyTextBtn(
                       onTap: () {
                         if (passwordcontroller.text.isEmpty ||
                             emailcontroller.text.isEmpty) {
@@ -214,7 +221,7 @@ class _RegisterPageState extends State<RegisterPage> {
                           navigateToHome(context);
                         }
                       },
-                      marginHorizontal: 0,
+                      title: "Register",
                     ),
                     Padding(
                       padding: const EdgeInsets.only(
@@ -270,11 +277,11 @@ class _RegisterPageState extends State<RegisterPage> {
                       child: Row(
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
-                          const Text("Not a member ?"),
+                          const Text("Already a member ?"),
                           GestureDetector(
                             onTap: widget.onTap,
                             child: const Text(
-                              " Register now",
+                              " Login now",
                               style: TextStyle(
                                 color: Colors.blue,
                                 fontWeight: FontWeight.bold,

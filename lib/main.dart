@@ -4,6 +4,7 @@ import 'package:login_app/models/resturant.dart';
 import 'package:login_app/pages/splash_screen.dart';
 import 'package:login_app/service/size_selector/size_selector_service.dart';
 import 'package:login_app/themes/theme_provider.dart';
+import 'package:login_app/util/responsive.dart';
 import 'package:provider/provider.dart';
 
 void main() async {
@@ -13,6 +14,7 @@ void main() async {
         ChangeNotifierProvider(create: (context) => ThemeProvider()),
         ChangeNotifierProvider(create: (context) => Resturant()),
         ChangeNotifierProvider(create: (context) => SizeSelectorService()),
+        ChangeNotifierProvider(create: (context) => Responsive()),
       ],
       child: MyApp(),
     ),

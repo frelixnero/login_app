@@ -28,7 +28,6 @@ class _LoginPageState extends State<LoginPage> {
       builder: (context) {
         return ToastCard(
           color: Theme.of(context).colorScheme.errorContainer,
-
           title: Text(
             "Please fill in the fields",
             style: TextStyle(
@@ -75,28 +74,28 @@ class _LoginPageState extends State<LoginPage> {
     return Scaffold(
       backgroundColor: Theme.of(context).colorScheme.primaryContainer,
       body: SafeArea(
-        // 1. SingleChildScrollView is correct for keyboard handling
-        child: SingleChildScrollView(
-          scrollDirection: Axis.vertical,
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.center,
-            mainAxisAlignment: MainAxisAlignment.start,
-            children: [
-              Center(
-                child: Padding(
-                  padding: const EdgeInsets.only(top: 30),
-                  child: Text(
-                    "Baklava",
-                    style: TextStyle(
-                      fontSize: 30,
-                      color: Theme.of(context).colorScheme.inversePrimary,
-                      fontWeight: FontWeight.bold,
-                    ),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.center,
+          mainAxisAlignment: MainAxisAlignment.start,
+          children: [
+            Center(
+              child: Padding(
+                padding: const EdgeInsets.only(top: 30),
+                child: Text(
+                  "Baklava",
+                  style: TextStyle(
+                    fontSize: 31,
+                    color: Theme.of(context).colorScheme.surface,
+                    fontFamily: "Urbanist-Bold",
+                    fontWeight: FontWeight.w700,
                   ),
                 ),
               ),
+            ),
 
-              Container(
+            // Login form container (Expanded to fill remaining space)
+            Expanded(
+              child: Container(
                 margin: const EdgeInsets.only(top: 50, left: 0, right: 0),
                 padding: const EdgeInsets.all(16.0),
                 width: double.infinity,
@@ -107,168 +106,191 @@ class _LoginPageState extends State<LoginPage> {
                     topRight: Radius.circular(30),
                   ),
                 ),
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.start,
-                  mainAxisSize: MainAxisSize.min,
-                  children: [
-                    Padding(
-                      padding: const EdgeInsets.only(top: 8.0, bottom: 8.0),
-                      child: Divider(
-                        thickness: 5,
-                        indent: 100,
-                        endIndent: 100,
-                        color: Theme.of(context).colorScheme.secondary,
-                      ),
-                    ),
-                    const SizedBox(height: 30),
-                    const Text(
-                      "Welcome Back!",
-                      style: TextStyle(
-                        fontSize: 30,
-                        fontWeight: FontWeight.bold,
-                      ),
-                    ),
-                    const Text(
-                      "We've missed you!",
-                      style: TextStyle(fontSize: 16),
-                    ),
-                    const Text(
-                      "Log in to continue your experience",
-                      style: TextStyle(fontSize: 16),
-                    ),
-                    const SizedBox(height: 50),
-
-                    // email field
-                    Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      mainAxisSize: MainAxisSize.min,
-                      children: [
-                        const Text("Email"),
-                        MyTextField(
-                          preIcon: const Icon(Iconsax.sms),
-                          hintText: "Email",
-                          obscureText: false,
-                          controller: emailcontroller,
+                child: SingleChildScrollView(
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.start,
+                    mainAxisSize: MainAxisSize.min,
+                    children: [
+                      Padding(
+                        padding: const EdgeInsets.only(top: 8.0, bottom: 8.0),
+                        child: Divider(
+                          thickness: 5,
+                          indent: 100,
+                          endIndent: 100,
+                          color: Theme.of(context).colorScheme.secondary,
                         ),
-                      ],
-                    ),
-
-                    const SizedBox(height: 15),
-
-                    // password field
-                    Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      mainAxisSize: MainAxisSize.min,
-                      children: [
-                        const Text("Password"),
-                        MyTextField(
-                          preIcon: const Icon(Iconsax.lock),
-                          hintText: "Password",
-                          obscureText: true,
-                          controller: passwordcontroller,
-                        ),
-                      ],
-                    ),
-                    const SizedBox(height: 10),
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.end,
-                      children: [
-                        Text(
-                          "Forgot Password?",
-                          style: TextStyle(
-                            color: Theme.of(context).colorScheme.tertiary,
-                          ),
-                        ),
-                      ],
-                    ),
-                    const SizedBox(height: 10),
-                    const SizedBox(height: 30),
-
-                    MyButton(
-                      buttonText: "Login",
-                      onTap: () {
-                        if (passwordcontroller.text.isEmpty ||
-                            emailcontroller.text.isEmpty) {
-                          _showEmptyCartToast(context);
-                        } else {
-                          navigateToHome(context);
-                        }
-                      },
-                      marginHorizontal: 0,
-                    ),
-                    Padding(
-                      padding: const EdgeInsets.only(
-                        top: 15,
-                        bottom: 10,
-                        left: 15,
-                        right: 15,
                       ),
-                      child: Row(
+                      const SizedBox(height: 30),
+                      const Text(
+                        "Welcome Back!",
+                        style: TextStyle(
+                          fontFamily: "Urbanist-Bold",
+                          fontWeight: FontWeight.w700,
+                          fontSize: 31,
+                        ),
+                      ),
+                      const Text(
+                        "We've missed you!",
+                        style: TextStyle(
+                          fontSize: 16,
+                          fontWeight: FontWeight.w400,
+                        ),
+                      ),
+                      const Text(
+                        "Log in to continue your experience",
+                        style: TextStyle(
+                          fontSize: 16,
+                          fontWeight: FontWeight.w400,
+                        ),
+                      ),
+                      const SizedBox(height: 50),
+
+                      // email field
+                      Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        mainAxisSize: MainAxisSize.min,
                         children: [
-                          Expanded(
-                            child: Divider(
-                              thickness: 0.5,
-                              color: Colors.grey.shade500,
+                          const Text(
+                            "Email",
+                            style: TextStyle(
+                              fontSize: 16,
+                              fontWeight: FontWeight.w500,
                             ),
                           ),
-                          const Padding(
-                            padding: EdgeInsets.symmetric(horizontal: 10),
-                            child: Text(
-                              "or continue with",
-                              style: TextStyle(
-                                color: Color.fromARGB(255, 109, 108, 108),
-                                fontSize: 15,
-                              ),
+                          MyTextField(
+                            preIcon: const Icon(Iconsax.sms),
+                            hintText: "Email",
+                            obscureText: false,
+                            controller: emailcontroller,
+                          ),
+                        ],
+                      ),
+
+                      const SizedBox(height: 15),
+
+                      // password field
+                      Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        mainAxisSize: MainAxisSize.min,
+                        children: [
+                          const Text(
+                            "Password",
+                            style: TextStyle(
+                              fontSize: 16,
+                              fontWeight: FontWeight.w500,
                             ),
                           ),
-                          Expanded(
-                            child: Divider(
-                              thickness: 0.5,
-                              color: Colors.grey.shade500,
+                          MyTextField(
+                            preIcon: const Icon(Iconsax.lock),
+                            hintText: "Password",
+                            obscureText: true,
+                            controller: passwordcontroller,
+                          ),
+                        ],
+                      ),
+                      const SizedBox(height: 10),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.end,
+                        children: [
+                          Text(
+                            "Forgot Password?",
+                            style: TextStyle(
+                              color: Theme.of(context).colorScheme.tertiary,
                             ),
                           ),
                         ],
                       ),
-                    ),
-                    TextIconBtn(
-                      buttonText: "Google",
-                      onTap: () {},
-                      borderColor: Theme.of(context).colorScheme.secondary,
-                      borderWidth: 2,
-                      containerColor: Theme.of(context).colorScheme.surface,
-                      imagePath: "assets/google.png",
-                      height: 30,
-                      width: 30,
-                    ),
-                    Padding(
-                      padding: const EdgeInsets.only(
-                        left: 10.0,
-                        right: 10,
-                        bottom: 20,
-                        top: 30,
+                      const SizedBox(height: 10),
+                      const SizedBox(height: 30),
+
+                      MyTextBtn(
+                        onTap: () {
+                          print(
+                            "H E I G H T: ${MediaQuery.of(context).size.height}",
+                          );
+                          if (passwordcontroller.text.isEmpty ||
+                              emailcontroller.text.isEmpty) {
+                            _showEmptyCartToast(context);
+                          } else {
+                            navigateToHome(context);
+                          }
+                        },
+                        title: "Login",
                       ),
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          const Text("Not a member ?"),
-                          GestureDetector(
-                            onTap: widget.onTap,
-                            child: const Text(
-                              " Register now",
-                              style: TextStyle(
-                                color: Colors.blue,
-                                fontWeight: FontWeight.bold,
+                      Padding(
+                        padding: const EdgeInsets.only(
+                          top: 15,
+                          bottom: 10,
+                          left: 15,
+                          right: 15,
+                        ),
+                        child: Row(
+                          children: [
+                            Expanded(
+                              child: Divider(
+                                thickness: 0.5,
+                                color: Colors.grey.shade500,
                               ),
                             ),
-                          ),
-                        ],
+                            const Padding(
+                              padding: EdgeInsets.symmetric(horizontal: 10),
+                              child: Text(
+                                "or continue with",
+                                style: TextStyle(
+                                  color: Color.fromARGB(255, 109, 108, 108),
+                                  fontSize: 15,
+                                ),
+                              ),
+                            ),
+                            Expanded(
+                              child: Divider(
+                                thickness: 0.5,
+                                color: Colors.grey.shade500,
+                              ),
+                            ),
+                          ],
+                        ),
                       ),
-                    ),
-                  ],
+                      TextIconBtn(
+                        buttonText: "Google",
+                        onTap: () {},
+                        borderColor: Theme.of(context).colorScheme.secondary,
+                        borderWidth: 2,
+                        containerColor: Theme.of(context).colorScheme.surface,
+                        imagePath: "assets/google.png",
+                        height: 30,
+                        width: 30,
+                      ),
+                      Padding(
+                        padding: const EdgeInsets.only(
+                          left: 10.0,
+                          right: 10,
+                          bottom: 20,
+                          top: 30,
+                        ),
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            const Text("Not a member ?"),
+                            GestureDetector(
+                              onTap: widget.onTap,
+                              child: const Text(
+                                " Register now",
+                                style: TextStyle(
+                                  color: Colors.blue,
+                                  fontWeight: FontWeight.bold,
+                                ),
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
+                    ],
+                  ),
                 ),
               ),
-            ],
-          ),
+            ),
+          ],
         ),
       ),
     );

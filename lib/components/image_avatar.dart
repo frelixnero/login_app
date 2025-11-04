@@ -1,3 +1,4 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 
 class ImageAvatar extends StatefulWidget {
@@ -13,8 +14,8 @@ class ImageAvatarState extends State<ImageAvatar> {
   @override
   Widget build(BuildContext context) {
     return Container(
-      width: 50,
-      height: 50,
+      width: 40,
+      height: 40,
       decoration: BoxDecoration(
         shape: BoxShape.circle,
         border: Border.all(
@@ -23,27 +24,28 @@ class ImageAvatarState extends State<ImageAvatar> {
         ),
       ),
       clipBehavior: Clip.antiAlias, // Ensures circular clip
-      child: Image.network(
-        widget.imageUrl,
+      child: CachedNetworkImage(
+        height: 30,
+        width: 30,
+        // <-- Using the Caching Widget
+        imageUrl: widget.imageUrl,
         fit: BoxFit.cover,
-        loadingBuilder: (context, child, loadingProgress) {
-          if (loadingProgress != null) {
-            return SizedBox(
-              child: Center(
-                child: CircularProgressIndicator(
-                  color: Theme.of(context).colorScheme.primaryContainer,
-                  value: loadingProgress.expectedTotalBytes != null
-                      ? loadingProgress.cumulativeBytesLoaded /
-                            loadingProgress.expectedTotalBytes!
-                      : null,
-                ),
-              ),
-            );
-          } else {
-            return child;
-          }
+
+        // Placeholder while loading
+        progressIndicatorBuilder: (context, url, downloadProgress) {
+          return Center(
+            child: CircularProgressIndicator(
+              color: Theme.of(context).colorScheme.primaryContainer,
+              value: downloadProgress.progress,
+            ),
+          );
         },
-        errorBuilder: (context, error, stackTrace) => const Icon(Icons.error),
+
+        // Error handling
+        errorWidget:
+            (context, url, error) => const Center(
+              child: Icon(Icons.broken_image, color: Colors.red, size: 40),
+            ),
       ),
     );
   }

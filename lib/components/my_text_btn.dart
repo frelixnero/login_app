@@ -1,38 +1,68 @@
+import 'dart:async';
 import 'package:flutter/material.dart';
 
-// ignore: must_be_immutable
-class MyButton extends StatelessWidget {
-  final String buttonText;
-  final Function()? onTap;
-  double marginHorizontal = 10;
-  MyButton({
-    super.key,
-    required this.buttonText,
-    required this.onTap,
-    this.marginHorizontal = 10,
-  });
+class MyTextBtn extends StatefulWidget {
+  final VoidCallback onTap;
+  final String title;
+
+  const MyTextBtn({Key? key, required this.onTap, required this.title})
+    : super(key: key);
+
+  @override
+  _MyTextBtnState createState() => _MyTextBtnState();
+}
+
+class _MyTextBtnState extends State<MyTextBtn> {
+  bool _isInverted = false;
+
+  void _handleTap() {
+    setState(() => _isInverted = true);
+
+    // Call the MyTextBtn function
+    widget.onTap();
+
+    // Revert colors after 1.5 seconds
+    Future.delayed(Duration(seconds: 2), () {
+      if (mounted) {
+        setState(() => _isInverted = false);
+      }
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
-    // TODO: implement build
     return GestureDetector(
-      onTap: onTap,
+      onTap: _handleTap,
       child: Container(
+        height: 60,
+        margin: EdgeInsets.only(left: 10),
+        padding: EdgeInsets.all(10),
         decoration: BoxDecoration(
-          color: Theme.of(context).colorScheme.primaryContainer,
+          color:
+              _isInverted
+                  ? Theme.of(context).colorScheme.onPrimary
+                  : Theme.of(context).colorScheme.primaryContainer,
+          border: Border.all(
+            color: const Color.fromARGB(255, 255, 255, 255),
+            width: 1,
+          ),
           borderRadius: BorderRadius.circular(12),
         ),
-        padding: EdgeInsets.all(20),
-        margin: EdgeInsets.symmetric(horizontal: marginHorizontal),
-        child: Center(
-          child: Text(
-            buttonText,
-            style: TextStyle(
-              color: Theme.of(context).colorScheme.primary,
-              fontWeight: FontWeight.bold,
-              fontSize: 22,
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Text(
+              widget.title,
+              style: TextStyle(
+                color:
+                    _isInverted
+                        ? Theme.of(context).colorScheme.primaryContainer
+                        : Theme.of(context).colorScheme.primary,
+                fontSize: 18,
+                fontWeight: FontWeight.bold,
+              ),
             ),
-          ),
+          ],
         ),
       ),
     );

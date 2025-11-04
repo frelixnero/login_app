@@ -13,7 +13,18 @@ class Resturant extends ChangeNotifier {
           'With layers of flaky pastry, cream cheese, and vibrant fresh berries, they are perfect for a simple family breakfast or part of a brunch spread',
       networkImagePath:
           'https://www.spatuladesserts.com/wp-content/uploads/2024/03/Cream-Cheese-Puff-Pastry-Danish-00558.jpg',
-      price: 5000,
+      price: 3.53,
+      foodCategory: FoodCategory.puff,
+      availabelAddons: [Addons(name: 'Extra Cheese', price: 1000)],
+      foodSize: FoodSize(pastrySize: "small"),
+    ),
+    Food(
+      name: 'Chocolate Pudding Bread',
+      description:
+          'With layers of flaky pastry, cream cheese, and vibrant fresh berries, they are perfect for a simple family breakfast or part of a brunch spread',
+      networkImagePath:
+          'https://www.seriouseats.com/thmb/ttIGcQA3NrB2MQ1eY_XQLelaaO4=/1500x0/filters:no_upscale():max_bytes(150000):strip_icc()/__opt__aboutcom__coeus__resources__content_migration__serious_eats__seriouseats.com__images__2014__09__20140817-Chocotorta-Allie-Lazar-b8f835dad3e741249e8edb950b2dce18.jpg',
+      price: 7.53,
       foodCategory: FoodCategory.puff,
       availabelAddons: [Addons(name: 'Extra Cheese', price: 1000)],
       foodSize: FoodSize(pastrySize: "small"),
@@ -26,7 +37,7 @@ class Resturant extends ChangeNotifier {
           'With layers of flaky pastry, cream cheese, and vibrant fresh berries, they are perfect for a simple family breakfast or part of a brunch spread',
       networkImagePath:
           'https://grabyourspork.com/wp-content/uploads/2016/01/Fruit-and-Custard-Tart-007.jpg',
-      price: 5000,
+      price: 5.53,
       foodCategory: FoodCategory.flaky,
       availabelAddons: [Addons(name: 'Extra Cheese', price: 1000)],
       foodSize: FoodSize(pastrySize: "small"),
@@ -39,7 +50,7 @@ class Resturant extends ChangeNotifier {
           'With layers of flaky pastry, cream cheese, and vibrant fresh berries, they are perfect for a simple family breakfast or part of a brunch spread',
       networkImagePath:
           'https://www.jusrol.co.uk/wp-content/uploads/2022/02/Sweetheart-Raspberry-Recipe-Card.jpg',
-      price: 5000,
+      price: 3.53,
       foodCategory: FoodCategory.shortcrust,
       availabelAddons: [Addons(name: 'Extra Cheese', price: 1000)],
       foodSize: FoodSize(pastrySize: "small"),
@@ -52,7 +63,7 @@ class Resturant extends ChangeNotifier {
           'With layers of flaky pastry, cream cheese, and vibrant fresh berries, they are perfect for a simple family breakfast or part of a brunch spread',
       networkImagePath:
           'https://sallysbakingaddiction.com/wp-content/uploads/2018/08/cream-puffs-2.jpg',
-      price: 5000,
+      price: 2.53,
       foodCategory: FoodCategory.choux,
       availabelAddons: [Addons(name: 'Extra Cheese', price: 1000)],
       foodSize: FoodSize(pastrySize: "small"),
@@ -65,7 +76,7 @@ class Resturant extends ChangeNotifier {
           'Baklava is a Middle Eastern/Mediterranean dessert made by layering filo dough with grounded nuts and spices, then soaking it with sweet syrup',
       networkImagePath:
           'https://bromabakery.com/wp-content/uploads/2018/09/Chocolate-Hazelnut-Baklava-6-225x225.jpg',
-      price: 5000,
+      price: 10.53,
       foodCategory: FoodCategory.filo,
       availabelAddons: [Addons(name: 'Extra Cheese', price: 1000)],
       foodSize: FoodSize(pastrySize: "small"),

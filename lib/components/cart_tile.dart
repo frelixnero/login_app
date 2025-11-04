@@ -1,7 +1,9 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:login_app/components/food_quantity_selector.dart';
 import 'package:login_app/models/cart_item.dart';
 import 'package:login_app/models/resturant.dart';
+import 'package:lucide_icons/lucide_icons.dart';
 import 'package:provider/provider.dart';
 
 class MyCartTile extends StatelessWidget {
@@ -36,34 +38,35 @@ class MyCartTile extends StatelessWidget {
                   ),
                   child: ClipRRect(
                     borderRadius: BorderRadius.circular(12),
-                    child: Image.network(
-                      cartItem.food.networkImagePath,
+                    child: CachedNetworkImage(
+                      // <-- Using the Caching Widget
+                      imageUrl: cartItem.food.networkImagePath,
                       fit: BoxFit.cover,
-                      loadingBuilder: (context, child, loadingProgress) {
-                        if (loadingProgress != null) {
-                          return SizedBox(
-                            child: Center(
-                              child: CircularProgressIndicator(
-                                color:
-                                    Theme.of(
-                                      context,
-                                    ).colorScheme.primaryContainer,
-                                value:
-                                    loadingProgress.expectedTotalBytes != null
-                                        ? loadingProgress
-                                                .cumulativeBytesLoaded /
-                                            loadingProgress.expectedTotalBytes!
-                                        : null,
-                              ),
-                            ),
-                          );
-                        } else {
-                          return child;
-                        }
+
+                      // Placeholder while loading
+                      progressIndicatorBuilder: (
+                        context,
+                        url,
+                        downloadProgress,
+                      ) {
+                        return Center(
+                          child: CircularProgressIndicator(
+                            color:
+                                Theme.of(context).colorScheme.primaryContainer,
+                            value: downloadProgress.progress,
+                          ),
+                        );
                       },
-                      errorBuilder:
-                          (context, error, stackTrace) =>
-                              const Icon(Icons.error),
+
+                      // Error handling
+                      errorWidget:
+                          (context, url, error) => const Center(
+                            child: Icon(
+                              Icons.broken_image,
+                              color: Colors.red,
+                              size: 40,
+                            ),
+                          ),
                     ),
                   ),
                 ),
@@ -82,22 +85,39 @@ class MyCartTile extends StatelessWidget {
                         ),
                       ),
                       Text(
-                        "₦${cartItem.food.price.toString()}0",
+                        "\$${cartItem.food.price.toString()}",
                         style: Theme.of(context).textTheme.bodyMedium,
                       ),
                     ],
                   ),
                 ),
                 // Quantity Selector
-                MyQuantitySelector(
-                  food: cartItem.food,
-                  quantity: cartItem.quantity,
-                  onIncrement: () {
-                    resturant.addToCart(cartItem.food, cartItem.selectedAddons);
-                  },
-                  onDecrement: () {
-                    resturant.removeFromCart(cartItem);
-                  },
+                Column(
+                  crossAxisAlignment: CrossAxisAlignment.end,
+                  children: [
+                    Padding(
+                      padding: const EdgeInsets.only(right: 8, bottom: 2),
+                      child: GestureDetector(
+                        onTap: () {
+                          resturant.removeFromCart(cartItem);
+                        },
+                        child: Icon(LucideIcons.trash, color: Colors.red),
+                      ),
+                    ),
+                    MyQuantitySelector(
+                      food: cartItem.food,
+                      quantity: cartItem.quantity,
+                      onIncrement: () {
+                        resturant.addToCart(
+                          cartItem.food,
+                          cartItem.selectedAddons,
+                        );
+                      },
+                      onDecrement: () {
+                        resturant.removeFromCart(cartItem);
+                      },
+                    ),
+                  ],
                 ),
               ],
             ),

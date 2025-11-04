@@ -30,6 +30,8 @@ class MyQuantitySelector extends StatelessWidget {
           // decrease
           Container(
             margin: EdgeInsets.symmetric(horizontal: 0),
+            height: 40,
+            width: 40,
             decoration: BoxDecoration(
               color: Theme.of(context).colorScheme.primaryContainer,
               borderRadius: BorderRadius.circular(8),
@@ -53,6 +55,8 @@ class MyQuantitySelector extends StatelessWidget {
           // increae
           Container(
             margin: EdgeInsets.symmetric(horizontal: 0),
+            height: 40,
+            width: 40,
             decoration: BoxDecoration(
               color: Theme.of(context).colorScheme.primaryContainer,
               borderRadius: BorderRadius.circular(8),

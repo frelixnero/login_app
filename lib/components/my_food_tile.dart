@@ -1,3 +1,4 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:iconsax/iconsax.dart';
 import 'package:login_app/NavigationService/navigator_key.dart';
@@ -62,34 +63,35 @@ class MyFoodTile extends StatelessWidget {
                       borderRadius: BorderRadius.circular(12),
                     ),
                     clipBehavior: Clip.antiAlias, // Ensures circular clip
-                    child: Image.network(
-                      food.networkImagePath,
+                    child: CachedNetworkImage(
+                      // <-- Using the Caching Widget
+                      imageUrl: food.networkImagePath,
                       fit: BoxFit.cover,
-                      loadingBuilder: (context, child, loadingProgress) {
-                        if (loadingProgress != null) {
-                          return SizedBox(
-                            child: Center(
-                              child: CircularProgressIndicator(
-                                color:
-                                    Theme.of(
-                                      context,
-                                    ).colorScheme.primaryContainer,
-                                value:
-                                    loadingProgress.expectedTotalBytes != null
-                                        ? loadingProgress
-                                                .cumulativeBytesLoaded /
-                                            loadingProgress.expectedTotalBytes!
-                                        : null,
-                              ),
-                            ),
-                          );
-                        } else {
-                          return child;
-                        }
+
+                      // Placeholder while loading
+                      progressIndicatorBuilder: (
+                        context,
+                        url,
+                        downloadProgress,
+                      ) {
+                        return Center(
+                          child: CircularProgressIndicator(
+                            color:
+                                Theme.of(context).colorScheme.primaryContainer,
+                            value: downloadProgress.progress,
+                          ),
+                        );
                       },
-                      errorBuilder:
-                          (context, error, stackTrace) =>
-                              const Icon(Icons.error),
+
+                      // Error handling
+                      errorWidget:
+                          (context, url, error) => const Center(
+                            child: Icon(
+                              Icons.broken_image,
+                              color: Colors.red,
+                              size: 40,
+                            ),
+                          ),
                     ),
                   ),
                 ),
@@ -100,9 +102,10 @@ class MyFoodTile extends StatelessWidget {
                   child: Text(
                     food.name.toUpperCase(),
                     style: TextStyle(
-                      fontSize: 15,
+                      fontSize: 16,
                       color: Theme.of(context).colorScheme.onSecondary,
                       fontWeight: FontWeight.bold,
+                      fontFamily: "Sora-SemiBold",
                     ),
                   ),
                 ),
@@ -125,9 +128,11 @@ class MyFoodTile extends StatelessWidget {
                 Padding(
                   padding: const EdgeInsets.only(top: 5, left: 10, right: 10),
                   child: Text(
-                    "₦${food.price.toString()}",
+                    "\$ ${food.price.toStringAsFixed(2)}",
                     style: TextStyle(
-                      fontSize: 13,
+                      fontSize: 16,
+                      fontFamily: "Sora-SemiBold",
+                      fontWeight: FontWeight.w500,
                       color: Theme.of(context).colorScheme.onSecondary,
                     ),
                   ),

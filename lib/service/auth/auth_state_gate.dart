@@ -1,66 +1,131 @@
-import 'package:curved_navigation_bar/curved_navigation_bar.dart';
 import 'package:flutter/material.dart';
-import 'package:iconsax/iconsax.dart';
-import 'package:login_app/pages/cart_page.dart';
-import 'package:login_app/pages/favorites_page.dart';
-import 'package:login_app/pages/profile_page.dart';
+import 'package:lucide_icons/lucide_icons.dart';
+import 'package:persistent_bottom_nav_bar/persistent_bottom_nav_bar.dart';
 import '../../pages/home_page.dart';
+import '../../pages/cart_page.dart';
+import '../../pages/favorites_page.dart';
+import '../../pages/profile_page.dart';
 
 class AuthGate extends StatefulWidget {
-  AuthGate({super.key});
+  const AuthGate({super.key});
 
   @override
   State<AuthGate> createState() => _AuthGateState();
 }
 
 class _AuthGateState extends State<AuthGate> {
-  int navBarIndex = 0;
+  late PersistentTabController _controller;
 
-  final List<Widget> _pages = [
-    const HomePage(),
-    const FavoritesPage(),
-    const CartPage(),
-    ProfilePage(),
-  ];
+  @override
+  void initState() {
+    super.initState();
+    _controller = PersistentTabController(initialIndex: 0);
+  }
 
-  void navigateBottomBar(int index) {
-    setState(() {
-      navBarIndex = index;
-    });
+  List<Widget> _buildScreens() {
+    return [HomePage(), FavoritesPage(), CartPage(), ProfilePage()];
+  }
+
+  Widget _buildIcon(
+    IconData icon,
+    bool isActive,
+    Color activeColor,
+    Color inactiveColor,
+  ) {
+    return Column(
+      mainAxisAlignment: MainAxisAlignment.center,
+      children: [
+        Icon(icon, color: isActive ? activeColor : inactiveColor, size: 26),
+        const SizedBox(height: 4),
+        AnimatedContainer(
+          duration: const Duration(milliseconds: 250),
+          height: 3,
+          width: isActive ? 18 : 0,
+          decoration: BoxDecoration(
+            color: isActive ? activeColor : Colors.transparent,
+            borderRadius: BorderRadius.circular(2),
+          ),
+        ),
+      ],
+    );
+  }
+
+  List<PersistentBottomNavBarItem> _navBarsItems(BuildContext context) {
+    final colorScheme = Theme.of(context).colorScheme;
+
+    return [
+      PersistentBottomNavBarItem(
+        icon: _buildIcon(
+          LucideIcons.home,
+          _controller.index == 0,
+          colorScheme.primaryContainer,
+          colorScheme.outline,
+        ),
+        activeColorPrimary: colorScheme.primaryContainer,
+        inactiveColorPrimary: colorScheme.outline,
+      ),
+      PersistentBottomNavBarItem(
+        icon: _buildIcon(
+          LucideIcons.heart,
+          _controller.index == 1,
+          colorScheme.primaryContainer,
+          colorScheme.outline,
+        ),
+        activeColorPrimary: colorScheme.primaryContainer,
+        inactiveColorPrimary: colorScheme.outline,
+      ),
+      PersistentBottomNavBarItem(
+        icon: _buildIcon(
+          LucideIcons.shoppingCart,
+          _controller.index == 2,
+          colorScheme.primaryContainer,
+          colorScheme.outline,
+        ),
+        activeColorPrimary: colorScheme.primaryContainer,
+        inactiveColorPrimary: colorScheme.outline,
+      ),
+      PersistentBottomNavBarItem(
+        icon: _buildIcon(
+          LucideIcons.bell,
+          _controller.index == 3,
+          colorScheme.primaryContainer,
+          colorScheme.outline,
+        ),
+        activeColorPrimary: colorScheme.primaryContainer,
+        inactiveColorPrimary: colorScheme.outline,
+      ),
+    ];
   }
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      bottomNavigationBar: Container(
-        margin: const EdgeInsets.symmetric(horizontal: 8, vertical: 8),
-        padding: const EdgeInsets.only(top: 0, left: 1, right: 1, bottom: 10),
-        decoration: BoxDecoration(
-          color: Colors.transparent,
-          borderRadius: BorderRadius.circular(12),
-        ),
-        child: CurvedNavigationBar(
-          index: navBarIndex,
-          height: MediaQuery.of(context).size.height * 0.08,
-          color: Theme.of(context).colorScheme.primaryContainer,
-          backgroundColor: Theme.of(context).colorScheme.surface,
-          animationDuration: const Duration(milliseconds: 300),
-          onTap: navigateBottomBar,
-          items: [
-            Icon(Iconsax.home, color: Theme.of(context).colorScheme.background),
-            Icon(
-              Iconsax.heart,
-              color: Theme.of(context).colorScheme.background,
-            ),
-            Icon(
-              Iconsax.shopping_cart,
-              color: Theme.of(context).colorScheme.background,
-            ),
-            Icon(Iconsax.user, color: Theme.of(context).colorScheme.background),
-          ],
-        ),
+    return PersistentTabView(
+      context,
+      controller: _controller,
+      screens: _buildScreens(),
+      items: _navBarsItems(context),
+      backgroundColor: Theme.of(context).colorScheme.surface,
+      confineToSafeArea: true,
+      handleAndroidBackButtonPress: true,
+      resizeToAvoidBottomInset: true,
+      stateManagement: true,
+      decoration: NavBarDecoration(
+        borderRadius: BorderRadius.circular(16),
+        colorBehindNavBar: Theme.of(context).colorScheme.surface,
+        boxShadow: [
+          BoxShadow(
+            color: Colors.black12,
+            blurRadius: 10,
+            offset: const Offset(0, -2),
+          ),
+        ],
       ),
-      body: IndexedStack(index: navBarIndex, children: _pages),
+      navBarStyle: NavBarStyle.simple, // cleaner, custom-friendly layout
+      onItemSelected: (index) {
+        setState(() {
+          _controller.index = index;
+        });
+      },
     );
   }
 }

@@ -26,7 +26,7 @@ class MyIconBtn extends StatelessWidget {
       child: IconButton(
         icon: Icon(icon),
         onPressed: onPressed,
-        color: Theme.of(context).colorScheme.inversePrimary,
+        color: Theme.of(context).colorScheme.primary,
       ),
     );
   }
