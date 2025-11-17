@@ -14,6 +14,7 @@ import 'package:login_app/models/food.dart';
 import 'package:login_app/models/resturant.dart';
 import 'package:login_app/pages/categorie_page.dart';
 import 'package:login_app/pages/food_page.dart';
+import 'package:login_app/util/responsive.dart';
 import 'package:lucide_icons/lucide_icons.dart';
 import 'package:provider/provider.dart';
 
@@ -127,42 +128,117 @@ class _HomePageState extends State<HomePage>
 
   // Helper method to build the Category section dynamically
   Widget _buildCategorySection() {
+    final responsiveProvider = Provider.of<Responsive>(context);
+
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          children: [
-            const Text(
-              'Categories',
-              style: TextStyle(
-                fontSize: 18,
-                fontWeight: FontWeight.bold,
-                fontFamily: "Sora-SemiBold",
-              ),
-            ),
-            const Spacer(),
-            GestureDetector(
-              onTap:
-                  () => Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                      builder: (context) => CategoriePage(tabIndex: 0),
+        responsiveProvider.isTextEnormousAndLarge(context)
+            ? responsiveProvider.isShorterThanNormal(context)
+                ? SingleChildScrollView(
+                  scrollDirection: Axis.horizontal,
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      const Text(
+                        'Categories',
+                        style: TextStyle(
+                          fontSize: 18,
+                          fontWeight: FontWeight.bold,
+                          fontFamily: "Sora-SemiBold",
+                        ),
+                      ),
+                      SizedBox(width: 20),
+                      GestureDetector(
+                        onTap:
+                            () => Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                builder:
+                                    (context) => CategoriePage(tabIndex: 0),
+                              ),
+                            ),
+                        child: Text(
+                          'See more',
+                          style: TextStyle(
+                            decoration: TextDecoration.underline,
+                            decorationColor:
+                                Theme.of(context).colorScheme.primaryContainer,
+                            fontSize: 15,
+                            color:
+                                Theme.of(context).colorScheme.primaryContainer,
+                          ),
+                        ),
+                      ),
+                    ],
+                  ),
+                )
+                : Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    const Text(
+                      'Categories',
+                      style: TextStyle(
+                        fontSize: 18,
+                        fontWeight: FontWeight.bold,
+                        fontFamily: "Sora-SemiBold",
+                      ),
+                    ),
+                    SizedBox(width: 20),
+                    GestureDetector(
+                      onTap:
+                          () => Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) => CategoriePage(tabIndex: 0),
+                            ),
+                          ),
+                      child: Text(
+                        'See more',
+                        style: TextStyle(
+                          decoration: TextDecoration.underline,
+                          decorationColor:
+                              Theme.of(context).colorScheme.primaryContainer,
+                          fontSize: 15,
+                          color: Theme.of(context).colorScheme.primaryContainer,
+                        ),
+                      ),
+                    ),
+                  ],
+                )
+            : Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                const Text(
+                  'Categories',
+                  style: TextStyle(
+                    fontSize: 18,
+                    fontWeight: FontWeight.bold,
+                    fontFamily: "Sora-SemiBold",
+                  ),
+                ),
+                SizedBox(width: 20),
+                GestureDetector(
+                  onTap:
+                      () => Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => CategoriePage(tabIndex: 0),
+                        ),
+                      ),
+                  child: Text(
+                    'See more',
+                    style: TextStyle(
+                      decoration: TextDecoration.underline,
+                      decorationColor:
+                          Theme.of(context).colorScheme.primaryContainer,
+                      fontSize: 15,
+                      color: Theme.of(context).colorScheme.primaryContainer,
                     ),
                   ),
-              child: Text(
-                'See more',
-                style: TextStyle(
-                  decoration: TextDecoration.underline,
-                  decorationColor:
-                      Theme.of(context).colorScheme.primaryContainer,
-                  fontSize: 15,
-                  color: Theme.of(context).colorScheme.primaryContainer,
                 ),
-              ),
+              ],
             ),
-          ],
-        ),
         // CONDITIONAL RENDERING for Categories
         _isLoading
             ? const CategoryRowSkeleton()
@@ -301,6 +377,7 @@ class _HomePageState extends State<HomePage>
 
   // The main content of the home page (excluding the search bar and header)
   Widget _buildMainContent() {
+    final responsiveProvider = Provider.of<Responsive>(context);
     return Column(
       mainAxisAlignment: MainAxisAlignment.start,
       children: [
@@ -327,30 +404,89 @@ class _HomePageState extends State<HomePage>
         Column(
           mainAxisAlignment: MainAxisAlignment.start,
           children: [
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                const Text(
-                  'Popular Pasteries',
-                  style: TextStyle(
-                    fontSize: 18,
-                    fontWeight: FontWeight.bold,
-                    fontFamily: "Sora-SemiBold",
-                  ),
+            responsiveProvider.isTextEnormousAndLarge(context)
+                ? responsiveProvider.isShorterThanNormal(context)
+                    ? SingleChildScrollView(
+                      scrollDirection: Axis.horizontal,
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          const Text(
+                            'Popular Pasteries',
+                            style: TextStyle(
+                              fontSize: 18,
+                              fontWeight: FontWeight.bold,
+                              fontFamily: "Sora-SemiBold",
+                            ),
+                          ),
+                          SizedBox(width: 20),
+                          Text(
+                            'See more',
+                            style: TextStyle(
+                              decoration: TextDecoration.underline,
+                              decorationColor:
+                                  Theme.of(
+                                    context,
+                                  ).colorScheme.primaryContainer,
+                              fontSize: 15,
+                              color:
+                                  Theme.of(
+                                    context,
+                                  ).colorScheme.primaryContainer,
+                            ),
+                          ),
+                        ],
+                      ),
+                    )
+                    : Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        const Text(
+                          'Popular Pasteries',
+                          style: TextStyle(
+                            fontSize: 18,
+                            fontWeight: FontWeight.bold,
+                            fontFamily: "Sora-SemiBold",
+                          ),
+                        ),
+                        SizedBox(width: 20),
+                        Text(
+                          'See more',
+                          style: TextStyle(
+                            decoration: TextDecoration.underline,
+                            decorationColor:
+                                Theme.of(context).colorScheme.primaryContainer,
+                            fontSize: 15,
+                            color:
+                                Theme.of(context).colorScheme.primaryContainer,
+                          ),
+                        ),
+                      ],
+                    )
+                : Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    const Text(
+                      'Popular Pasteries',
+                      style: TextStyle(
+                        fontSize: 18,
+                        fontWeight: FontWeight.bold,
+                        fontFamily: "Sora-SemiBold",
+                      ),
+                    ),
+                    SizedBox(width: 20),
+                    Text(
+                      'See more',
+                      style: TextStyle(
+                        decoration: TextDecoration.underline,
+                        decorationColor:
+                            Theme.of(context).colorScheme.primaryContainer,
+                        fontSize: 15,
+                        color: Theme.of(context).colorScheme.primaryContainer,
+                      ),
+                    ),
+                  ],
                 ),
-                const Spacer(),
-                Text(
-                  'See more',
-                  style: TextStyle(
-                    decoration: TextDecoration.underline,
-                    decorationColor:
-                        Theme.of(context).colorScheme.primaryContainer,
-                    fontSize: 15,
-                    color: Theme.of(context).colorScheme.primaryContainer,
-                  ),
-                ),
-              ],
-            ),
             // CONDITIONAL RENDERING for GridView
             _isLoading ? const GridSkeleton() : MyGridView(),
           ],
@@ -367,6 +503,7 @@ class _HomePageState extends State<HomePage>
     return Scaffold(
       backgroundColor: Theme.of(context).colorScheme.surface,
       body: SafeArea(
+        bottom: false,
         child: SingleChildScrollView(
           scrollDirection: Axis.vertical,
           child: Padding(

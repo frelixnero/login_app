@@ -7,6 +7,8 @@ import 'package:login_app/components/my_text_btn.dart';
 import 'package:login_app/components/my_textfield.dart';
 import 'package:login_app/components/text_icon_btn.dart';
 import 'package:login_app/service/auth/auth_state_gate.dart';
+import 'package:login_app/util/responsive.dart';
+import 'package:provider/provider.dart';
 
 class RegisterPage extends StatefulWidget {
   final void Function()? onTap;
@@ -75,9 +77,11 @@ class _RegisterPageState extends State<RegisterPage> {
 
   @override
   Widget build(BuildContext context) {
+    final responsiveProvider = Provider.of<Responsive>(context);
     return Scaffold(
       backgroundColor: Theme.of(context).colorScheme.primaryContainer,
       body: SafeArea(
+        bottom: false,
         // 1. SingleChildScrollView is correct for keyboard handling
         child: SingleChildScrollView(
           scrollDirection: Axis.vertical,
@@ -264,7 +268,7 @@ class _RegisterPageState extends State<RegisterPage> {
                       borderWidth: 2,
                       containerColor: Theme.of(context).colorScheme.surface,
                       imagePath: "assets/google.png",
-                      height: 30,
+                      height: responsiveProvider.isTextLarge(context) ? 67 : 54,
                       width: 30,
                     ),
                     Padding(

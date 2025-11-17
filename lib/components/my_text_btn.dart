@@ -1,5 +1,7 @@
 import 'dart:async';
 import 'package:flutter/material.dart';
+import 'package:login_app/util/responsive.dart';
+import 'package:provider/provider.dart';
 
 class MyTextBtn extends StatefulWidget {
   final VoidCallback onTap;
@@ -31,11 +33,16 @@ class _MyTextBtnState extends State<MyTextBtn> {
 
   @override
   Widget build(BuildContext context) {
+    final responsiveProvider = Provider.of<Responsive>(context);
     return GestureDetector(
       onTap: _handleTap,
       child: Container(
-        height: 60,
-        margin: EdgeInsets.only(left: 10),
+        height:
+            responsiveProvider.isTextLarge(context)
+                ? 67
+                : responsiveProvider.isTextEnormous(context)
+                ? 80
+                : 54,
         padding: EdgeInsets.all(10),
         decoration: BoxDecoration(
           color:

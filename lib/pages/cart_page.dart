@@ -175,9 +175,9 @@ class _CartPageState extends State<CartPage> {
 
               Padding(
                 padding: const EdgeInsets.only(
-                  left: 25.0,
-                  right: 25.0,
-                  bottom: 25.0,
+                  bottom: 10.0,
+                  left: 10,
+                  right: 10,
                 ),
                 child: ReflexButton(
                   onTap: () {

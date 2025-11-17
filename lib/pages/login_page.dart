@@ -7,6 +7,8 @@ import 'package:login_app/components/my_text_btn.dart';
 import 'package:login_app/components/my_textfield.dart';
 import 'package:login_app/components/text_icon_btn.dart';
 import 'package:login_app/service/auth/auth_state_gate.dart';
+import 'package:login_app/util/responsive.dart';
+import 'package:provider/provider.dart';
 
 class LoginPage extends StatefulWidget {
   final void Function()? onTap;
@@ -71,13 +73,18 @@ class _LoginPageState extends State<LoginPage> {
 
   @override
   Widget build(BuildContext context) {
+    final responsiveProvider = Provider.of<Responsive>(context);
     return Scaffold(
+      // This yellow color only shows above the form
       backgroundColor: Theme.of(context).colorScheme.primaryContainer,
       body: SafeArea(
+        bottom: false,
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.center,
+          // Set to start so logo is at the top
           mainAxisAlignment: MainAxisAlignment.start,
           children: [
+            // LOGO SECTION (Fixed Height, Yellow Background)
             Center(
               child: Padding(
                 padding: const EdgeInsets.only(top: 30),
@@ -85,6 +92,7 @@ class _LoginPageState extends State<LoginPage> {
                   "Baklava",
                   style: TextStyle(
                     fontSize: 31,
+                    // The text color should contrast with the yellow background
                     color: Theme.of(context).colorScheme.surface,
                     fontFamily: "Urbanist-Bold",
                     fontWeight: FontWeight.w700,
@@ -93,13 +101,20 @@ class _LoginPageState extends State<LoginPage> {
               ),
             ),
 
-            // Login form container (Expanded to fill remaining space)
+            // LOGIN FORM CONTAINER (Expanded to fill entire remainder, White Background)
             Expanded(
               child: Container(
-                margin: const EdgeInsets.only(top: 50, left: 0, right: 0),
+                margin: const EdgeInsets.only(
+                  top: 50,
+                  left: 0,
+                  right: 0,
+                  // Ensure no bottom margin to allow expansion all the way down
+                  bottom: 0,
+                ),
                 padding: const EdgeInsets.all(16.0),
                 width: double.infinity,
                 decoration: BoxDecoration(
+                  // This white surface color will cover the rest of the screen
                   color: Theme.of(context).colorScheme.surface,
                   borderRadius: const BorderRadius.only(
                     topLeft: Radius.circular(30),
@@ -109,6 +124,8 @@ class _LoginPageState extends State<LoginPage> {
                 child: SingleChildScrollView(
                   child: Column(
                     mainAxisAlignment: MainAxisAlignment.start,
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    // Ensures the column only takes the space it needs inside the scroll view
                     mainAxisSize: MainAxisSize.min,
                     children: [
                       Padding(
@@ -129,7 +146,7 @@ class _LoginPageState extends State<LoginPage> {
                           fontSize: 31,
                         ),
                       ),
-                      const Text(
+                      Text(
                         "We've missed you!",
                         style: TextStyle(
                           fontSize: 16,
@@ -205,9 +222,6 @@ class _LoginPageState extends State<LoginPage> {
 
                       MyTextBtn(
                         onTap: () {
-                          print(
-                            "H E I G H T: ${MediaQuery.of(context).size.height}",
-                          );
                           if (passwordcontroller.text.isEmpty ||
                               emailcontroller.text.isEmpty) {
                             _showEmptyCartToast(context);
@@ -258,9 +272,15 @@ class _LoginPageState extends State<LoginPage> {
                         borderWidth: 2,
                         containerColor: Theme.of(context).colorScheme.surface,
                         imagePath: "assets/google.png",
-                        height: 30,
+                        height:
+                            responsiveProvider.isTextLarge(context)
+                                ? 67
+                                : responsiveProvider.isTextEnormous(context)
+                                ? 80
+                                : 54,
                         width: 30,
                       ),
+                      SizedBox(height: 30),
                       Padding(
                         padding: const EdgeInsets.only(
                           left: 10.0,
@@ -268,28 +288,80 @@ class _LoginPageState extends State<LoginPage> {
                           bottom: 20,
                           top: 30,
                         ),
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: [
-                            const Text("Not a member ?"),
-                            GestureDetector(
-                              onTap: widget.onTap,
-                              child: const Text(
-                                " Register now",
-                                style: TextStyle(
-                                  color: Colors.blue,
-                                  fontWeight: FontWeight.bold,
+                        child:
+                            responsiveProvider.isTextEnormousAndLarge(context)
+                                ? responsiveProvider.isShorterThanNormal(
+                                      context,
+                                    )
+                                    ? SingleChildScrollView(
+                                      scrollDirection: Axis.horizontal,
+                                      child: Row(
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.center,
+                                        children: [
+                                          Text("Don't have an account?"),
+                                          GestureDetector(
+                                            onTap: widget.onTap,
+                                            child: Text(
+                                              " Create one",
+                                              style: TextStyle(
+                                                color:
+                                                    Theme.of(
+                                                      context,
+                                                    ).colorScheme.tertiary,
+                                                fontWeight: FontWeight.bold,
+                                              ),
+                                            ),
+                                          ),
+                                        ],
+                                      ),
+                                    )
+                                    : Row(
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.center,
+                                      children: [
+                                        Text("Don't have an account?"),
+                                        GestureDetector(
+                                          onTap: widget.onTap,
+                                          child: Text(
+                                            " Create one",
+                                            style: TextStyle(
+                                              color:
+                                                  Theme.of(
+                                                    context,
+                                                  ).colorScheme.tertiary,
+                                              fontWeight: FontWeight.bold,
+                                            ),
+                                          ),
+                                        ),
+                                      ],
+                                    )
+                                : Row(
+                                  mainAxisAlignment: MainAxisAlignment.center,
+                                  children: [
+                                    Text("Don't have an account?"),
+                                    GestureDetector(
+                                      onTap: widget.onTap,
+                                      child: Text(
+                                        " Create one",
+                                        style: TextStyle(
+                                          color:
+                                              Theme.of(
+                                                context,
+                                              ).colorScheme.tertiary,
+                                          fontWeight: FontWeight.bold,
+                                        ),
+                                      ),
+                                    ),
+                                  ],
                                 ),
-                              ),
-                            ),
-                          ],
-                        ),
                       ),
                     ],
                   ),
                 ),
               ),
             ),
+            // The fixed-height Container that caused the issue has been removed.
           ],
         ),
       ),

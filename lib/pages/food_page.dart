@@ -7,6 +7,7 @@ import 'package:login_app/components/reflex_btn.dart';
 import 'package:login_app/components/size_selector.dart';
 import 'package:login_app/models/food.dart';
 import 'package:login_app/models/resturant.dart';
+import 'package:login_app/util/responsive.dart';
 import 'package:lucide_icons/lucide_icons.dart';
 import 'package:provider/provider.dart';
 
@@ -67,6 +68,7 @@ class _FoodPageState extends State<FoodPage> {
 
   @override
   Widget build(BuildContext context) {
+    final responsiveProvider = Provider.of<Responsive>(context);
     // Resturant myResturant = Provider.of<Resturant>(context, listen: false);
     // final userCart = myResturant.cart;
     return Scaffold(
@@ -113,65 +115,234 @@ class _FoodPageState extends State<FoodPage> {
                     right: 10,
                     bottom: 10,
                   ),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      Column(
-                        mainAxisAlignment: MainAxisAlignment.start,
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Text(
-                            widget.food.name,
-                            style: TextStyle(
-                              fontSize: 18,
-                              color: Theme.of(context).colorScheme.onSecondary,
-                              fontWeight: FontWeight.w600,
-                              fontFamily: "Sora-SemiBold",
-                            ),
-                          ),
-                          SizedBox(height: 5),
-                          Text(
-                            '\$${widget.food.price.toStringAsFixed(2)}',
-                            style: TextStyle(
-                              fontSize: 18,
-                              color: Theme.of(context).colorScheme.onSecondary,
-                              fontWeight: FontWeight.w600,
-                              fontFamily: "Sora-SemiBold",
-                            ),
-                          ),
-                        ],
-                      ),
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.start,
-                        mainAxisSize: MainAxisSize.min,
-                        children: [
-                          MyIconBtn(
-                            icon: Icons.add,
-                            onPressed: () => increaseQuantity(),
-                            height: 40,
-                            width: 40,
-                          ),
-                          Padding(
-                            padding: const EdgeInsets.only(left: 4, right: 4),
-                            child: Text(
-                              "${quantitySelector.toStringAsFixed(0)}",
-                              style: TextStyle(
-                                fontSize: 20,
-                                color: Theme.of(context).colorScheme.tertiary,
-                                fontWeight: FontWeight.bold,
+                  child:
+                      responsiveProvider.isTextEnormousAndLarge(context)
+                          ? responsiveProvider.isShorterThanNormal(context)
+                              ? SingleChildScrollView(
+                                scrollDirection: Axis.horizontal,
+                                child: Row(
+                                  mainAxisAlignment:
+                                      MainAxisAlignment.spaceBetween,
+                                  children: [
+                                    Column(
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.start,
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.start,
+                                      children: [
+                                        Text(
+                                          widget.food.name,
+                                          style: TextStyle(
+                                            fontSize: 18,
+                                            color:
+                                                Theme.of(
+                                                  context,
+                                                ).colorScheme.onSecondary,
+                                            fontWeight: FontWeight.w600,
+                                            fontFamily: "Sora-SemiBold",
+                                          ),
+                                        ),
+                                        SizedBox(height: 5),
+                                        Text(
+                                          '\$${widget.food.price.toStringAsFixed(2)}',
+                                          style: TextStyle(
+                                            fontSize: 18,
+                                            color:
+                                                Theme.of(
+                                                  context,
+                                                ).colorScheme.onSecondary,
+                                            fontWeight: FontWeight.w600,
+                                            fontFamily: "Sora-SemiBold",
+                                          ),
+                                        ),
+                                      ],
+                                    ),
+                                    SizedBox(width: 10),
+                                    Row(
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.start,
+                                      mainAxisSize: MainAxisSize.min,
+                                      children: [
+                                        MyIconBtn(
+                                          icon: Icons.add,
+                                          onPressed: () => increaseQuantity(),
+                                          height: 40,
+                                          width: 40,
+                                        ),
+                                        Padding(
+                                          padding: const EdgeInsets.only(
+                                            left: 4,
+                                            right: 4,
+                                          ),
+                                          child: Text(
+                                            "${quantitySelector.toStringAsFixed(0)}",
+                                            style: TextStyle(
+                                              fontSize: 20,
+                                              color:
+                                                  Theme.of(
+                                                    context,
+                                                  ).colorScheme.tertiary,
+                                              fontWeight: FontWeight.bold,
+                                            ),
+                                          ),
+                                        ),
+                                        MyIconBtn(
+                                          icon: Icons.remove,
+                                          onPressed: () => decreaseQuantity(),
+                                          height: 40,
+                                          width: 40,
+                                        ),
+                                      ],
+                                    ),
+                                  ],
+                                ),
+                              )
+                              : Row(
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceBetween,
+                                children: [
+                                  Column(
+                                    mainAxisAlignment: MainAxisAlignment.start,
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.start,
+                                    children: [
+                                      Text(
+                                        widget.food.name,
+                                        style: TextStyle(
+                                          fontSize: 18,
+                                          color:
+                                              Theme.of(
+                                                context,
+                                              ).colorScheme.onSecondary,
+                                          fontWeight: FontWeight.w600,
+                                          fontFamily: "Sora-SemiBold",
+                                        ),
+                                      ),
+                                      SizedBox(height: 5),
+                                      Text(
+                                        '\$${widget.food.price.toStringAsFixed(2)}',
+                                        style: TextStyle(
+                                          fontSize: 18,
+                                          color:
+                                              Theme.of(
+                                                context,
+                                              ).colorScheme.onSecondary,
+                                          fontWeight: FontWeight.w600,
+                                          fontFamily: "Sora-SemiBold",
+                                        ),
+                                      ),
+                                    ],
+                                  ),
+                                  SizedBox(width: 10),
+                                  Row(
+                                    mainAxisAlignment: MainAxisAlignment.start,
+                                    mainAxisSize: MainAxisSize.min,
+                                    children: [
+                                      MyIconBtn(
+                                        icon: Icons.add,
+                                        onPressed: () => increaseQuantity(),
+                                        height: 40,
+                                        width: 40,
+                                      ),
+                                      Padding(
+                                        padding: const EdgeInsets.only(
+                                          left: 4,
+                                          right: 4,
+                                        ),
+                                        child: Text(
+                                          "${quantitySelector.toStringAsFixed(0)}",
+                                          style: TextStyle(
+                                            fontSize: 20,
+                                            color:
+                                                Theme.of(
+                                                  context,
+                                                ).colorScheme.tertiary,
+                                            fontWeight: FontWeight.bold,
+                                          ),
+                                        ),
+                                      ),
+                                      MyIconBtn(
+                                        icon: Icons.remove,
+                                        onPressed: () => decreaseQuantity(),
+                                        height: 40,
+                                        width: 40,
+                                      ),
+                                    ],
+                                  ),
+                                ],
+                              )
+                          : Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              Column(
+                                mainAxisAlignment: MainAxisAlignment.start,
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  Text(
+                                    widget.food.name,
+                                    style: TextStyle(
+                                      fontSize: 18,
+                                      color:
+                                          Theme.of(
+                                            context,
+                                          ).colorScheme.onSecondary,
+                                      fontWeight: FontWeight.w600,
+                                      fontFamily: "Sora-SemiBold",
+                                    ),
+                                  ),
+                                  SizedBox(height: 5),
+                                  Text(
+                                    '\$${widget.food.price.toStringAsFixed(2)}',
+                                    style: TextStyle(
+                                      fontSize: 18,
+                                      color:
+                                          Theme.of(
+                                            context,
+                                          ).colorScheme.onSecondary,
+                                      fontWeight: FontWeight.w600,
+                                      fontFamily: "Sora-SemiBold",
+                                    ),
+                                  ),
+                                ],
                               ),
-                            ),
+                              SizedBox(width: 10),
+                              Row(
+                                mainAxisAlignment: MainAxisAlignment.start,
+                                mainAxisSize: MainAxisSize.min,
+                                children: [
+                                  MyIconBtn(
+                                    icon: Icons.add,
+                                    onPressed: () => increaseQuantity(),
+                                    height: 40,
+                                    width: 40,
+                                  ),
+                                  Padding(
+                                    padding: const EdgeInsets.only(
+                                      left: 4,
+                                      right: 4,
+                                    ),
+                                    child: Text(
+                                      "${quantitySelector.toStringAsFixed(0)}",
+                                      style: TextStyle(
+                                        fontSize: 20,
+                                        color:
+                                            Theme.of(
+                                              context,
+                                            ).colorScheme.tertiary,
+                                        fontWeight: FontWeight.bold,
+                                      ),
+                                    ),
+                                  ),
+                                  MyIconBtn(
+                                    icon: Icons.remove,
+                                    onPressed: () => decreaseQuantity(),
+                                    height: 40,
+                                    width: 40,
+                                  ),
+                                ],
+                              ),
+                            ],
                           ),
-                          MyIconBtn(
-                            icon: Icons.remove,
-                            onPressed: () => decreaseQuantity(),
-                            height: 40,
-                            width: 40,
-                          ),
-                        ],
-                      ),
-                    ],
-                  ),
                 ),
 
                 // Description
@@ -277,7 +448,7 @@ class _FoodPageState extends State<FoodPage> {
             ),
           ),
           Padding(
-            padding: const EdgeInsets.only(bottom: 50, left: 12, right: 12),
+            padding: const EdgeInsets.only(bottom: 10, left: 10, right: 10),
             child: ReflexButton(
               onTap: () => addToCart(widget.food, selectedAddon),
               title: "Add to Cart",

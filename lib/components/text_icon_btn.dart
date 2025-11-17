@@ -20,7 +20,7 @@ class TextIconBtn extends StatelessWidget {
     required this.borderWidth,
     required this.containerColor,
     required this.imagePath,
-    required this.height,
+    this.height = 50,
     required this.width,
   });
 
@@ -29,7 +29,7 @@ class TextIconBtn extends StatelessWidget {
     return GestureDetector(
       onTap: onTap,
       child: Container(
-        height: 50,
+        height: height,
         width: double.infinity,
         decoration: BoxDecoration(
           color: containerColor,
@@ -37,7 +37,6 @@ class TextIconBtn extends StatelessWidget {
           border: Border.all(color: borderColor, width: borderWidth),
         ),
         padding: EdgeInsets.all(10),
-        margin: EdgeInsets.symmetric(horizontal: marginHorizontal),
         child: Center(
           child: Row(
             mainAxisAlignment: MainAxisAlignment.center,

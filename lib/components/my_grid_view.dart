@@ -20,7 +20,6 @@ class MyGridView extends StatelessWidget {
     );
     List<Food> foodItems = myResturant.menu;
 
-    // Filter out the excluded food if provided
     if (excludeFood != null) {
       foodItems =
           foodItems.where((food) => food.name != excludeFood!.name).toList();
@@ -35,7 +34,23 @@ class MyGridView extends StatelessWidget {
         crossAxisSpacing: 8.0,
         mainAxisSpacing: 8.0,
         childAspectRatio:
-            responsiveProvider.isLongerThanNormal(context) ? 0.60 : 0.68,
+            responsiveProvider.isLongerThanNormal(context)
+                ? responsiveProvider.isTextLarge(context)
+                    ? 0.60
+                    : responsiveProvider.isTextMedium(context)
+                    ? 0.65
+                    : responsiveProvider.isTextSmall(context)
+                    ? 0.70
+                    : 0.60
+                : responsiveProvider.isTextEnormous(context)
+                ? 0.50
+                : responsiveProvider.isTextLarge(context)
+                ? 0.55
+                : responsiveProvider.isTextMedium(context)
+                ? 0.60
+                : responsiveProvider.isTextSmall(context)
+                ? 0.65
+                : 0.70,
       ),
       itemCount: foodItems.length,
       itemBuilder: (context, index) {
